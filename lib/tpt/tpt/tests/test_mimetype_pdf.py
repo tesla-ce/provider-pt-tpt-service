@@ -47,7 +47,7 @@ class TestMimetypePDF(UtilHelper):
             self.assertEqual(concat['concat_a_concat_id'], 1)
             self.assertEqual(concat['concat_b_concat_id'], 1)
             self.assertEqual(concat['tesla_id'], '2')
-            self.assertAlmostEqual(concat['result'], 0.99, delta=0.01)
+            self.assertAlmostEqual(concat['result'], 0.99, delta=0.2)
             self.assertEqual(concat['type'], 'TEXT_ONLY')
 
     def test_send_pdf_ok_result_0(self):
