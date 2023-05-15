@@ -19,7 +19,7 @@ class TestMimetypePDF(UtilHelper):
         tpt.events['onEndAnalysis'] += self.on_end_analysis
         original_request_id = "1"
         user_id = 1
-        activity_id = 1
+        activity_id = 3
 
         data = self.get_sample_b64_from_path('document1_raw.pdf', 'application/pdf')
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
@@ -28,7 +28,7 @@ class TestMimetypePDF(UtilHelper):
 
         original_request_id = "2"
         user_id = 2
-        activity_id = 1
+        activity_id = 3
 
         data = self.get_sample_b64_from_path('document2_raw.pdf', 'application/pdf')
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
@@ -55,7 +55,7 @@ class TestMimetypePDF(UtilHelper):
         tpt.events['onEndAnalysis'] += self.on_end_analysis
         original_request_id = "1"
         user_id = 1
-        activity_id = 1
+        activity_id = 4
 
         data = self.get_sample_b64_from_path('document1_raw.pdf', 'application/pdf')
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
@@ -64,7 +64,7 @@ class TestMimetypePDF(UtilHelper):
 
         original_request_id = 2
         user_id = 2
-        activity_id = 1
+        activity_id = 4
 
         data = self.get_sample_b64_from_path('document2.pdf', 'application/pdf')
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
