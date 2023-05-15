@@ -19,7 +19,7 @@ class TestMimetypeTXT(UtilHelper):
         tpt.events['onEndAnalysis'] += self.on_end_analysis
         original_request_id = 1
         user_id = 1
-        activity_id = 1
+        activity_id = 5
 
         mimetype = 'plain/text'
         data = self.get_sample_b64_from_path('moodle_file15.txt', mimetype)
@@ -29,7 +29,7 @@ class TestMimetypeTXT(UtilHelper):
 
         original_request_id = "2"
         user_id = 2
-        activity_id = 1
+        activity_id = 5
 
         data = self.get_sample_b64_from_path('moodle_file32.txt', mimetype)
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
@@ -56,7 +56,7 @@ class TestMimetypeTXT(UtilHelper):
         tpt.events['onEndAnalysis'] += self.on_end_analysis
         original_request_id = 1
         user_id = 1
-        activity_id = 1
+        activity_id = 6
 
         mimetype = 'plain/text'
         data = self.get_sample_b64_from_path('moodle_file15.txt', mimetype)
@@ -66,7 +66,7 @@ class TestMimetypeTXT(UtilHelper):
 
         original_request_id = "2"
         user_id = 2
-        activity_id = 1
+        activity_id = 6
 
         data = self.get_sample_b64_from_path('moodle_file32_mod.txt', mimetype)
         request_id = tpt.task.prepare.execute(original_request_id, user_id, activity_id, data)
