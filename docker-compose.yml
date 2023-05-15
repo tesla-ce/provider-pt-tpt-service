@@ -1,0 +1,67 @@
+version: '3.5'
+services:
+  tpt_db:
+    image: postgres
+    environment:
+      POSTGRES_DB: tpt_database
+      POSTGRES_USER: tpt_admin
+      POSTGRES_PASSWORD: tpt_admin
+    ports:
+      - 55432:5432
+    volumes:
+      - tpt_db:/var/lib/postgresql/data
+
+  tpt_service:
+    image: registry.sunai.uoc.edu/tesla-ce/providers/tpt-service:latest
+    depends_on:
+      - tpt_db
+    environment:
+      DB_ADDRESS: tpt_db
+      DB_NAME: tpt_database
+      DB_USER: tpt_admin
+      DB_PASSWORD: tpt_admin
+      DB_SCHEMA: tpt_schema
+      DB_PORT: 5432
+      DB_ENGINE: postgresql+psycopg2
+      DEBUG: 0
+      DOMAIN: "https://inst-1.demo.tesla-ce.eu/tpt"
+      API_URL: "https://inst-1.demo.tesla-ce.eu"
+      ENDPOINT_SEND_RESULT: /api/webhooks
+      API_SECRET_FILE: "run/secrets/API_SECRET"
+      TPT_SECRET_FILE: "run/secrets/TPT_SECRET"
+    secrets:
+      - source: TPT_ROLE_ID
+        target: ROLE_ID
+      - source: TPT_SECRET_ID
+        target: SECRET_ID
+      - source: TPT_SECRET
+        target: SECRET
+    networks:
+      - tesla_public
+      - tesla_private
+    volumes:
+      - tpt_data:/code/tpt_service/data
+
+secrets:
+  TPT_ROLE_ID:
+    file: ./secrets/TPT_ROLE_ID
+  TPT_SECRET_ID:
+    file: ./secrets/TPT_SECRET_ID
+  TPT_SECRET:
+    file: ./secrets/TPT_SECRET
+networks:
+  tesla_public:
+    external: true
+  tesla_private:
+    external: true
+volumes:
+  tpt_data:
+    driver_opts:
+      type: none
+      device: /var/tesla/tpt_data
+      o: bind
+  tpt_db:
+    driver_opts:
+      type: none
+      device: /var/tesla/tpt_db
+      o: bind

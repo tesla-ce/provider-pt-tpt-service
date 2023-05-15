@@ -1,0 +1,10 @@
+.idea
+.pytest_cache
+*.pyc
+*.log*
+venv
+*.db
+tpt/build
+tpt/dist
+tpt/tpt.egg-info
+test_store
