@@ -1,0 +1,6 @@
+psycopg2==2.8.6
+SQLAlchemy==1.4.15
+python-docx==0.8.11
+textract==1.6.3
+configparser==5.0.2
+#setupfiles==0.0.14

@@ -1,0 +1,152 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h1>List of comparisons:</h1>
+    <table class="table">
+        <thead>
+        <th>Learner</th>
+        <th>Type</th>
+        <th>Result</th>
+        <th>Details</th>
+        </thead>
+        <tbody>
+            {% for line in audit_data %}
+            <tr>
+                <td>{{ line.tesla_id }}</td>
+                <td>{{ line.type }}</td>
+                <td>{{ line.result }}</td>
+                <td>
+                    <a href="{{ url_for('detail_comparison', original_request_id=original_request_id, b_request_id=line.b_request_id)}}">
+                        View details
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    // detail
+    function buildInterface(json) {
+        console.log(json);
+
+        var div = $('#src_document');
+
+        var audit_data = JSON.parse(json.audit_data.audit_data);
+
+        setupDocument(div, audit_data.src_text, audit_data.blocks, 'src');
+
+        div = $('#ref_document');
+
+        setupDocument(div, audit_data.ref_text, audit_data.blocks, 'ref');
+    }
+
+    function inversePrefix (prefix)
+    {
+        if (prefix == 'src')
+        {
+            return 'ref';
+        }
+        else if (prefix == 'ref')
+        {
+            return 'src';
+        }
+
+        return prefix;
+    }
+
+    function setupDocument (div, text, blocks, prefix) {
+
+        var lines = text.split("\n");
+
+        var span = $("<span></span>");
+
+        var ol = $("<ol></ol>");
+
+        var types = [lines.length];
+
+        for(var i=0;i<lines.length;i++)
+        {
+            types[i] = "normal";
+        }
+
+        var refs = [lines.length];
+
+        for(var i=0;i<lines.length;i++)
+        {
+            refs[i] = [];
+        }
+
+        prefixOther = inversePrefix(prefix);
+
+        $.map( blocks, function( val, i ) {
+
+            start = val[prefix + '_file_start_line'];
+            end = val[prefix + '_file_end_line'];
+
+            startOther = val[prefixOther + '_file_start_line'];
+            endOther = val[prefixOther + '_file_end_line'];
+
+            type = val.type;
+
+            for (var j=start-1;j<end;j++)
+            {
+                if ((type == 'statement') || (type == 'similarity' && types[j] != 'statement'))
+                {
+                    types[j] = type;
+                }
+
+                if (j==start-1)
+                {
+                    refs[j].push({ "startOther": startOther, "endOther":endOther});
+                }
+            }
+
+        });
+
+        $.map( lines, function( val, i ) {
+
+            refLinks = "";
+
+            $.map( refs[i], function( val, j ) {
+
+                start = i+1;
+
+                refLinks += val.startOther + "-" + val.endOther + "&nbsp;<a href=\"javascript:arrangeTop('"+prefix+"', "+start+", '"+prefixOther+"', "+val.startOther+");\"><img src=\"/static/img/sync.png\"/></a></br>";
+
+            });
+
+            text = val.trim().length > 0 ? val : "&nbsp;";
+
+            ol.append ("<li id=\"" + prefix + "_" + (i+1) + "\"><span class=\""+ types[i] +" text_block\" style=\"\">" + text + "</span><div style=\"align:center;float:right;width:35px\">" + refLinks + "</div></li>");
+
+        });
+
+        span.append(ol);
+        div.append(span);
+
+        // add this to enable scroll to the end at the top of the scroll view
+        div.append("<div style=\"height:" + div.height() + "px\"></div>");
+    }
+
+    function arrangeTop (prefix1, start1, prefix2, start2)
+    {
+        var offset = $("#" + prefix1 + "_" + start1).position().top + 10;
+
+        $("#" + prefix1 + "_document").animate({scrollTop: offset}, 1000);
+
+        var offsetOther = $("#" + prefix2 + "_" + start2).position().top + 10;
+
+        $("#" + prefix2 + "_document").animate({scrollTop: offsetOther}, 1000);
+    }
+
+    $(document).ready(function() {
+        var json = document.getElementById('audit_data').value;
+        buildInterface(JSON.parse(json));
+    })
+
+</script>
+{% endblock %}

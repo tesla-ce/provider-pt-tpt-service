@@ -1,0 +1,5 @@
+Flask==2.0.1
+Flask-Cors==3.0.10
+uWSGI==2.0.19.1
+requests==2.27.1
+./tpt-1.0-py2.py3-none-any.whl

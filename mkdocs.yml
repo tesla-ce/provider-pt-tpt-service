@@ -1,0 +1,38 @@
+site_name: TeSLA Plagiarism Tool (TPT)
+site_url: https://tesla-ce.github.io/python-client/
+site_author: Roger Munoz
+
+nav:
+  - Home: index.md
+  - Service: service.md
+  - Options: options.md
+  - API: api.md
+
+theme:
+  name: "material"
+  #custom_dir: overrides
+
+markdown_extensions:
+  - admonition
+
+plugins:
+  - search
+  - autorefs
+  - mkdocs_apidoc
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+            - sys.path.insert(0, "tpt_service")
+            - print('INITIALIZED')
+          rendering:
+            show_source: true
+          selection:
+            docstring_style: restructured-text
+      watch:
+        - tpt_service
+extra:
+  version:
+    provider: mike

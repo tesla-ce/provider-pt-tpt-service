@@ -1,0 +1,2 @@
+[MASTER]
+ignore=tpt.egg-info,dist,LICENSE,MANIFEST.in,README.md,VERSION,requirements.txt
