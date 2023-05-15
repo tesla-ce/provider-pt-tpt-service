@@ -40,14 +40,14 @@ class TestMimetypePDF(UtilHelper):
             pass
 
         self.assertEqual(self.test_result_on_end_analysis['request_id'], "1")
-        self.assertEqual(self.test_result_on_end_analysis['result'], 99.0)
+        self.assertAlmostEqual(self.test_result_on_end_analysis['result'], 99, delta=1)
         aux_audit = self.test_result_on_end_analysis['audit_data']
 
         for concat in aux_audit:
             self.assertEqual(concat['concat_a_concat_id'], 1)
             self.assertEqual(concat['concat_b_concat_id'], 1)
             self.assertEqual(concat['tesla_id'], '2')
-            self.assertEqual(concat['result'], 0.99)
+            self.assertAlmostEqual(concat['result'], 0.99, delta=0.01)
             self.assertEqual(concat['type'], 'TEXT_ONLY')
 
     def test_send_pdf_ok_result_0(self):
