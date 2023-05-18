@@ -35,13 +35,13 @@ PACKAGE_DATA = {
 }
 
 setuptools.setup(
-    name='tpt',
+    name='tesla-ce-provider-pt-tpt-lib',
     version=version,
     description=long_description,
     author='Xavier Baro <xbaro@uoc.edu>, David Gañan <dganan@uoc.edu>, '
            'Roger Muñoz <rmunozber@uoc.edu>',
     author_email='xbaro@uoc.edu, dganan@uoc.edu, rmunozber@uoc.edu',
-    url="https://git.sunai.uoc.edu/tesla-ce/providers/tpt-service",
+    url="https://github.com/tesla-ce/provider-pt-tpt-service",
     packages=['tpt'],
     package_dir={'tpt': '.'},
     long_description='long_description',
@@ -55,5 +55,5 @@ setuptools.setup(
       "Operating System :: POSIX :: Linux",
       "Framework :: Pytest"
     ],
-    python_requires='>=3.6'
+    python_requires='>=3.6',
 )
