@@ -109,33 +109,34 @@ jobs:
         continue-on-error: true
         with:
           fossa-api-key: ${{ secrets.FOSSA_API_KEY }}
-#  publish:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    if: github.event_name == 'release'
-#    steps:
-#      - uses: actions/checkout@v2
-#        with:
-#          python-version: 3.9
-#      - name: Store version
-#        id: vars
-#        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-#      - name: Build package
-#        continue-on-error: true
-#        run: |
-#          # Build requirements
-#          python -m pip install --upgrade pip
-#          python -m pip install pip-tools twine
-#          if [ -f requirements.in ]; then pip-compile; fi
-#          # Set the version
-#          echo '${{ steps.vars.outputs.tag }}' > src/tks/data/VERSION
-#          # Build wheel
-#          python setup.py sdist bdist_wheel
-#          # Publish the package
-#          python -m twine upload dist/*
-#        env:
-#          TWINE_USERNAME: __token__
-#          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          python-version: 3.9
+      - name: Store version
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Build package
+        continue-on-error: true
+        run: |
+          cd lib/tpt/tpt
+          # Build requirements
+          python -m pip install --upgrade pip
+          python -m pip install pip-tools twine
+          pip install -r requirements.txt
+          # Set the version
+          echo '${{ steps.vars.outputs.tag }}' > VERSION
+          # Build wheel
+          python setup.py sdist bdist_wheel
+          # Publish the package
+          python -m twine upload dist/*
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
 #
 #  docker_tag:
 #    needs: publish
