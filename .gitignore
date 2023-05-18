@@ -16,3 +16,4 @@ lib/tpt/tpt/.coverage
 lib/tpt/.coverage
 pylint.txt
 lib/tpt/coverage.xml
+site
