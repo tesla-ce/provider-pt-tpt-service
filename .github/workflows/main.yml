@@ -137,66 +137,70 @@ jobs:
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-#
-#  docker_tag:
-#    needs: publish
-#    runs-on: ubuntu-latest
-#    if: github.event_name == 'release'
-#    steps:
-#      - name: Set up QEMU
-#        uses: docker/setup-qemu-action@v1
-#      - name: Store version
-#        id: vars
-#        run: |
-#          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v1
-#      - name: Login to DockerHub
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#      - name: Build and push
-#        id: docker_build
-#        uses: docker/build-push-action@v2.5.0
-#        with:
-#          push: true
-#          tags: teslace/provider-ks-tks:${{ steps.vars.outputs.tag }}, teslace/provider-ks-tks:latest
-#          file: docker/Dockerfile
-#          build-args: TESLA_CE_PROVIDER_VERSION=${{ steps.vars.outputs.tag }}
-#      - name: Image digest
-#        run: echo ${{ steps.docker_build.outputs.digest }}
-#
-#  docker_edge:
-#    needs: build
-#    runs-on: ubuntu-latest
-#    if: github.event_name != 'release'
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: Set up QEMU
-#        uses: docker/setup-qemu-action@v1
-#      - name: Store version
-#        id: vars
-#        run: |
-#          echo ::set-output name=version::$(cat src/tks/data/VERSION)
-#      - name: Set up Docker Buildx
-#        uses: docker/setup-buildx-action@v1
-#      - name: Login to DockerHub
-#        uses: docker/login-action@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
-#      - name: Build and push edge image
-#        run: |
-#          # Build requirements
-#          python -m pip install --upgrade pip
-#          python -m pip install pip-tools wheel
-#          pip-compile
-#          # Set the version
-#          echo '${{ steps.vars.outputs.version }}' > src/tks/data/VERSION
-#          # Build wheel
-#          python setup.py bdist_wheel
-#          # Build and publish
-#          docker build -t teslace/provider-ks-tks:edge -f docker/Dockerfile --build-arg TESLA_CE_PROVIDER_VERSION=${{ steps.vars.outputs.version }} .
-#          docker push teslace/provider-ks-tks:edge
-#
+
+  docker_tag:
+    needs: publish
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Store version
+        id: vars
+        run: |
+          echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2.5.0
+        with:
+          push: true
+          tags: teslace/provider-pt-tpt-service:${{ steps.vars.outputs.tag }}, teslace/provider-pt-tpt-service:latest
+          file: Dockerfile
+          build-args: TESLA_CE_TPT_LIB_VERSION=${{ steps.vars.outputs.tag }}
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+  docker_edge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name != 'release'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Store version
+        id: vars
+        run: |
+          echo ::set-output name=version::$(cat src/tks/data/VERSION)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build and push edge image
+        run: |
+          # Build requirements
+          cd lib/tpt/tpt
+          python -m pip install --upgrade pip
+          python -m pip install pip-tools wheel
+          pip install -r requirements.txt
+          
+          # Set the version
+          echo '${{ steps.vars.outputs.version }}' > VERSION
+          # Build wheel
+          python setup.py bdist_wheel
+          # Build and publish
+          cd ../../..
+          cp lib/tpt/tpt/dist/tesla_ce_provider_pt_tpt_lib-${{ steps.vars.outputs.version }}-py3-none-any.whl tpt_service/tesla_ce_provider_pt_tpt_lib-${{ steps.vars.outputs.version }}-py3-none-any.whl
+          docker build -t teslace/provider-pt-tpt-service:edge -f Dockerfile.edge --build-arg TESLA_CE_TPT_LIB_VERSION=${{ steps.vars.outputs.version }} .
+          docker push teslace/provider-pt-tpt-service:edge
+
