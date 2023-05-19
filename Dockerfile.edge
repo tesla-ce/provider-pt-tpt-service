@@ -7,8 +7,10 @@ RUN apt-get update && apt-get install nginx supervisor -y
 ARG TESLA_CE_TPT_LIB_VERSION
 
 # Define the TeSLA CE package to install
-ARG TESLA_CE_TPT_LIB_PACKAGE="tesla-ce-provider-pt-tpt-lib==$TESLA_CE_TPT_LIB_VERSION"
 
+ARG TESLA_CE_TPT_LIB_PACKAGE="/code/tpt_service/tesla_ce_provider_pt_tpt_lib-${TESLA_CE_TPT_LIB_VERSION}-py3-none-any.whl"
+RUN mkdir -p /code/tpt_service
+ADD tpt_service/tesla_ce_provider_pt_tpt_lib-${TESLA_CE_TPT_LIB_VERSION}-py3-none-any.whl /code/tpt_service
 
 #RUN apk update && apk add postgresql-dev gcc g++ make python3-dev musl-dev libxml2-dev \
 #libxslt-dev build-base linux-headers pcre-dev nginx xmlsec-dev jpeg-dev zlib-dev freetype-dev \
@@ -19,10 +21,8 @@ ARG TESLA_CE_TPT_LIB_PACKAGE="tesla-ce-provider-pt-tpt-lib==$TESLA_CE_TPT_LIB_VE
 # python-dev postgresql-client postgresql-dev nginx \
 #	&& pip2 install --upgrade pip gunicorn
 
-RUN mkdir -p /code/tpt_service
-COPY tpt_service/requirements.txt /code/tpt_service/requirements.txt
 
-#COPY tpt_service/tpt-1.0-py2.py3-none-any.whl /code/tpt_service/tpt-1.0-py2.py3-none-any.whl
+COPY tpt_service/requirements.txt /code/tpt_service/requirements.txt
 
 WORKDIR /code/tpt_service
 RUN pip install -r requirements.txt
