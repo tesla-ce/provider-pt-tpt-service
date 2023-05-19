@@ -1,4 +1,4 @@
-[![PyPi Version](https://img.shields.io/pypi/v/tesla-ce-provider-pt-tpt-service.svg)](https://pypi.python.org/pypi/tesla-ce-provider-pt-tpt-service/)
+[![PyPi Version](https://img.shields.io/pypi/v/tesla-ce-provider-pt-tpt-lib.svg)](https://pypi.python.org/pypi/tesla-ce-provider-pt-tpt-lib/)
 [![codecov](https://codecov.io/gh/tesla-ce/provider-pt-tpt-service/branch/main/graph/badge.svg?token=PJJQMW981P)](https://codecov.io/gh/tesla-ce/provider-pt-tpt-service)
 [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
 [![FOSSA Status](https://app.fossa.com/api/projects/custom%2B26246%2Fgithub.com%2Ftesla-ce%2Fprovider-pt-tpt-service.svg?type=shield)](https://app.fossa.com/projects/custom%2B26246%2Fgithub.com%2Ftesla-ce%2Fprovider-pt-tpt-service?ref=badge_shield)
