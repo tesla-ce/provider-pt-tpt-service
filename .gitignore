@@ -17,3 +17,5 @@ lib/tpt/.coverage
 pylint.txt
 lib/tpt/coverage.xml
 site
+lib/tpt/tpt/tesla_ce_provider_pt_tpt_lib.egg-info/
+tpt_service/tesla_ce_provider_pt_tpt_lib-1.0-py3-none-any.whl
