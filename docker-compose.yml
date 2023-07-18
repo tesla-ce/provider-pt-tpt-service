@@ -12,7 +12,7 @@ services:
       - tpt_db:/var/lib/postgresql/data
 
   tpt_service:
-    image: registry.sunai.uoc.edu/tesla-ce/providers/tpt-service:latest
+    image: teslace/provider-pt-tpt-service:latest
     depends_on:
       - tpt_db
     environment:

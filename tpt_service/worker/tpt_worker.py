@@ -9,6 +9,7 @@ from time import sleep, time
 import signal
 import json
 from tpt.commons import TPTException
+from tpt_service.api.utils import get_config_value
 
 
 class TPTWorker:
@@ -68,8 +69,8 @@ class TPTWorker:
             "audit_data": request['audit_data']
         }
 
-        secret = os.getenv('API_SECRET', None)
-        api_url = os.getenv('API_URL', None)
+        secret = get_config_value('API_SECRET')
+        api_url = get_config_value('API_URL')
 
         s = requests.Session()
         data['action'] = 'UDPATE_RESULT'
