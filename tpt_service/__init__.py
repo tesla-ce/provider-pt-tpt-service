@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.pool import SingletonThreadPool
 from sqlalchemy.pool import NullPool
 from tpt import TPT
-
+from api.utils import get_config_value
 
 echo_pool = False
 level = 'INFO'
@@ -44,15 +44,15 @@ def forbidden(e):
 cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 # create database
-db_address = os.getenv('DB_ADDRESS', None)
-db_port = os.getenv('DB_PORT', None)
-db_name = os.getenv('DB_NAME', None)
-db_user = os.getenv('DB_USER', None)
-db_password = os.getenv('DB_PASSWORD', None)
-db_schema = os.getenv('DB_SCHEMA', None)
-db_engine = os.getenv('DB_ENGINE', None)
-settings_file = os.getenv('SETTINGS_FILE', 'tpt_service/tpt.ini')
-db_force_create = os.getenv('DB_FORCE_CREATE', True)
+db_address = get_config_value('DB_ADDRESS', None)
+db_port = get_config_value('DB_PORT', None)
+db_name = get_config_value('DB_NAME', None)
+db_user = get_config_value('DB_USER', None)
+db_password = get_config_value('DB_PASSWORD', None)
+db_schema = get_config_value('DB_SCHEMA', None)
+db_engine = get_config_value('DB_ENGINE', None)
+settings_file = get_config_value('SETTINGS_FILE', 'tpt_service/tpt.ini')
+db_force_create = get_config_value('DB_FORCE_CREATE', True)
 
 database_string = u'{0}://{1}:{2}@{3}:{4}/{5}'.format(db_engine, db_user, db_password, db_address,
                                                       db_port, db_name)

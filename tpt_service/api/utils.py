@@ -1,7 +1,7 @@
 import os
 
 
-def get_config_value(key):
+def get_config_value(key, default=None):
     secret_path = '/run/secrets'
     # Check environment variables
     value = os.getenv(key, None)
@@ -14,5 +14,8 @@ def get_config_value(key):
     if file_path is not None and os.path.exists(file_path):
         with open(file_path, 'r') as secret:
             value = secret.read()
+
+    if value is None:
+        value = default
 
     return value
