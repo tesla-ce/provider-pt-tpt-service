@@ -5,7 +5,7 @@ def test_audit_data(client):
     test_verification(client)
     evaluation_id = 12
 
-    response = client.get('/api/v1/evaluation/audit/{}/'.format(evaluation_id))
+    response = client.get('/tpt/api/v1/evaluation/audit/{}/'.format(evaluation_id))
 
     assert response.content_type == 'application/json'
     assert response.status_code == 200

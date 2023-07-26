@@ -2,7 +2,7 @@ from tpt_service import app
 from .errors import not_found
 
 
-@app.route('/api/v1/enrolment/sample/', methods=['POST'])
+@app.route('/tpt/api/v1/enrolment/sample/', methods=['POST'])
 def sample_enrol():
     """
     Our instrument does not require enrolment

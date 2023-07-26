@@ -16,7 +16,7 @@ data = {
 
 
 def test_activity_create(client):
-    response = client.post('/api/v1/activity/', json=data)
+    response = client.post('/tpt/api/v1/activity/', json=data)
 
     assert response.content_type == 'application/json'
     assert response.status_code == 200
@@ -24,7 +24,7 @@ def test_activity_create(client):
 
 
 def test_activity_get(client):
-    response = client.get('/api/v1/activity/{}/{}/{}/'.format(
+    response = client.get('/tpt/api/v1/activity/{}/{}/{}/'.format(
         data['vle_id'], data['activity_id'], data['activity_type']
     ))
 
@@ -39,7 +39,7 @@ def test_activity_get(client):
 
 
 def test_activity_archive(client):
-    response = client.post('/api/v1/activity/archive/{}/{}/{}/'.format(
+    response = client.post('/tpt/api/v1/activity/archive/{}/{}/{}/'.format(
         data['vle_id'], data['activity_id'], data['activity_type']
     ))
 
@@ -50,7 +50,7 @@ def test_activity_archive(client):
 
 
 def test_activity_delete(client):
-    response = client.delete('/api/v1/activity/{}/{}/{}/'.format(
+    response = client.delete('/tpt/api/v1/activity/{}/{}/{}/'.format(
         data['vle_id'], data['activity_id'], data['activity_type']
     ))
 

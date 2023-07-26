@@ -1,3 +1,4 @@
+'''
 from .activity import set_activity, get_activity, delete_activity, archive_activity
 from .enrolment import sample_enrol
 from .errors import not_found, bad_request
@@ -18,3 +19,4 @@ __all__ = [
     'new_evaluation',
     'get_audit_data'
 ]
+'''

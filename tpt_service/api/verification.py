@@ -6,7 +6,7 @@ from tpt.commons import TPTException
 from .decorator import auth_required
 
 
-@app.route('/api/v1/evaluation/new/', methods=['POST'])
+@app.route('/tpt/api/v1/evaluation/new/', methods=['POST'])
 @auth_required
 def new_evaluation():
     app.logger.debug("NEW EVALUATION RECEIVED")
@@ -34,8 +34,8 @@ def new_evaluation():
         return bad_request("{}".format(err))
 
 
-@app.route('/api/v1/evaluation/audit/<original_request_id>/', methods=['GET'])
-@app.route('/api/v1/evaluation/audit/<original_request_id>/<comparison_id>', methods=['GET'])
+@app.route('/tpt/api/v1/evaluation/audit/<original_request_id>/', methods=['GET'])
+@app.route('/tpt/api/v1/evaluation/audit/<original_request_id>/<comparison_id>', methods=['GET'])
 def get_audit_data(original_request_id, comparison_id=None):
     app.logger.debug('ENTERING GET /evaluation/audit/<original_request_id>/ endpoint')
 

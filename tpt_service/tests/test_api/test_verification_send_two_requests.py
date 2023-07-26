@@ -12,7 +12,7 @@ def test_verification_send_two_requests(client):
         "learner_id": "1234",
         "evaluation_id": 12
     }
-    response = send_signed_request(client=client, verb='POST', url='/api/v1/evaluation/new/',
+    response = send_signed_request(client=client, verb='POST', url='/tpt/api/v1/evaluation/new/',
                                    data=data)
 
     assert response.content_type == 'application/json'
@@ -37,7 +37,7 @@ def test_verification_send_two_requests(client):
         "evaluation_id": 12
     }
 
-    response = send_signed_request(client=client, verb='POST', url='/api/v1/evaluation/new/',
+    response = send_signed_request(client=client, verb='POST', url='/tpt/api/v1/evaluation/new/',
                                    data=data)
 
     data = {
@@ -51,7 +51,7 @@ def test_verification_send_two_requests(client):
         "evaluation_id": 12
     }
 
-    response = send_signed_request(client=client, verb='POST', url='/api/v1/evaluation/new/',
+    response = send_signed_request(client=client, verb='POST', url='/tpt/api/v1/evaluation/new/',
                                    data=data)
     data = {
         "activity": {
@@ -63,7 +63,7 @@ def test_verification_send_two_requests(client):
         "learner_id": "1234567",
         "evaluation_id": 12
     }
-    response = send_signed_request(client=client, verb='POST', url='/api/v1/evaluation/new/',
+    response = send_signed_request(client=client, verb='POST', url='/tpt/api/v1/evaluation/new/',
                                    data=data)
 
     data = {
@@ -76,5 +76,5 @@ def test_verification_send_two_requests(client):
         "learner_id": "123456789",
         "evaluation_id": 12
     }
-    response = send_signed_request(client=client, verb='POST', url='/api/v1/evaluation/new/',
+    response = send_signed_request(client=client, verb='POST', url='/tpt/api/v1/evaluation/new/',
                                    data=data)

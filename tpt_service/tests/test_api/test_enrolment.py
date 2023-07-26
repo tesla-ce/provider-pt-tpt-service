@@ -1,7 +1,7 @@
 
 def test_enrolment(client):
 
-    response = client.post('/api/v1/enrolment/sample/')
+    response = client.post('/tpt/api/v1/enrolment/sample/')
 
     assert response.content_type == 'application/json'
     assert response.status_code == 404

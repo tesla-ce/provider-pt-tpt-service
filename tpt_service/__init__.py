@@ -6,7 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.pool import SingletonThreadPool
 from sqlalchemy.pool import NullPool
 from tpt import TPT
-from api.utils import get_config_value
+from .api.utils import get_config_value
 
 echo_pool = False
 level = 'INFO'

@@ -24,7 +24,7 @@ def get_activity_id_for_tpt(vle_id, activity_id, activity_type):
 """
 
 
-@app.route('/api/v1/activity/', methods=['POST'])
+@app.route('/tpt/api/v1/activity/', methods=['POST'])
 def set_activity():
     app.logger.debug('POST /activity/')
     course_id = request.json["configuration"]["course_id"]
@@ -72,7 +72,7 @@ def set_activity():
     return jsonify({'status_code': '0'})
 
 
-@app.route('/api/v1/activity/<vle_id>/<activity_id>/<activity_type>/', methods=['GET'])
+@app.route('/tpt/api/v1/activity/<vle_id>/<activity_id>/<activity_type>/', methods=['GET'])
 def get_activity(vle_id, activity_id, activity_type):
     app.logger.debug('GET /activity/{}/{}/{}'.format(vle_id, activity_id, activity_type))
     tpt_activity_id = get_activity_id_for_tpt(vle_id, activity_id, activity_type)
@@ -89,7 +89,7 @@ def get_activity(vle_id, activity_id, activity_type):
     return jsonify({'status_code': '0', 'activity_configuration': activity_configuration})
 
 
-@app.route('/api/v1/activity/<vle_id>/<activity_id>/<activity_type>/', methods=['DELETE'])
+@app.route('/tpt/api/v1/activity/<vle_id>/<activity_id>/<activity_type>/', methods=['DELETE'])
 def delete_activity(vle_id, activity_id, activity_type):
     app.logger.debug('DELETE /activity/{}/{}/{}'.format(vle_id, activity_id, activity_type))
     tpt_activity_id = get_activity_id_for_tpt(vle_id, activity_id, activity_type)
@@ -98,7 +98,7 @@ def delete_activity(vle_id, activity_id, activity_type):
     return jsonify({'status_code': '0'})
 
 
-@app.route('/api/v1/activity/archive/<vle_id>/<activity_id>/<activity_type>/', methods=['POST'])
+@app.route('/tpt/api/v1/activity/archive/<vle_id>/<activity_id>/<activity_type>/', methods=['POST'])
 def archive_activity(vle_id, activity_id, activity_type):
     app.logger.debug('POST /activity/archive/{}/{}/{}'.format(vle_id, activity_id, activity_type))
     tpt_activity_id = get_activity_id_for_tpt(vle_id, activity_id, activity_type)
