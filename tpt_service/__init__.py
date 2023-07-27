@@ -57,8 +57,8 @@ db_force_create = get_config_value('DB_FORCE_CREATE', True)
 database_string = u'{0}://{1}:{2}@{3}:{4}/{5}'.format(db_engine, db_user, db_password, db_address,
                                                       db_port, db_name)
 
-database_engine = create_engine(database_string, echo_pool=echo_pool, echo=debug, #pool_recycle=3600,
-                                poolclass=SingletonThreadPool)
+database_engine = create_engine(database_string, echo_pool=echo_pool, echo=debug, pool_recycle=3600,
+                                poolclass=SingletonThreadPool, pool_pre_ping=True)
 
 tpt = TPT(engine=database_engine, logger=app.logger, settings_file=settings_file,
           create_db=db_force_create, debug=True)
