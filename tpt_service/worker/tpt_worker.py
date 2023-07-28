@@ -73,7 +73,7 @@ class TPTWorker:
         api_url = get_config_value('API_URL')
 
         s = requests.Session()
-        data['action'] = 'UDPATE_RESULT'
+        data['action'] = 'UPDATE_RESULT'
         data['nonce'] = int(time() * 1000)
         headers = {
             "Content-Type": "application/json",
