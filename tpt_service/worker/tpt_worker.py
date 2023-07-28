@@ -65,7 +65,7 @@ class TPTWorker:
 
         data = {
             "request_id": parent_request_id,
-            "result": request['result'],
+            "result": request['result']/100.0,
             "audit_data": request['audit_data']
         }
 
