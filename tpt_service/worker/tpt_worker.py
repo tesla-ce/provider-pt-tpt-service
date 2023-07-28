@@ -62,11 +62,12 @@ class TPTWorker:
         self.logger.info("TPTWorker update_request {}".format(request['request_id']))
 
         parent_request_id = request['request_id'].split('__')[0]
-
+        # todo: try to extract correct code from request
         data = {
             "request_id": parent_request_id,
             "result": request['result']/100.0,
-            "audit_data": request['audit_data']
+            "audit_data": request['audit_data'],
+            "code": 1
         }
 
         secret = get_config_value('API_SECRET')
